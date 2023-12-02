@@ -8,6 +8,8 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\CorsFilter;
+use App\Filters\JWTFilter;
 
 class Filters extends BaseConfig
 {
@@ -25,6 +27,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'cors'          => CorsFilter::class,
+        'jwt'           => JWTFilter::class,
     ];
 
     /**

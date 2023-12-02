@@ -1,29 +1,55 @@
 version: '3.7'
 
 services:
+  nginx_library:
+    image: nginx:latest
+    container_name: nginx_library
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - .:/var/www/html
+    depends_on:
+      - php_library
+    networks:
+      - library
+      
+  php_library:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    container_name: php_library
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "9000:9000"
+    networks:
+      - library
+    depends_on:
+      - mysql_library
 
-  mysql:
+  mysql_library:
     image: mysql:8.0
-    container_name: mysql_container
+    container_name: mysql_library
     environment:
       MYSQL_ROOT_PASSWORD: tFvnFf32obTMy86IuKryfOga5
       MYSQL_DATABASE: library
     ports:
-      - "3406:3306"
+      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
     networks:
       - library
 
-  redis:
+  redis_library:
     image: redis:latest
-    container_name: redis_container
+    container_name: redis_library
     environment:
       REDIS_PASSWORD: tFvnFf32obTMy86IuKryfOga5
     command: redis-server --requirepass tFvnFf32obTMy86IuKryfOga5
     ports:
-      - "6380:6379"
+      - "6379:6379"
     networks:
       - library
 

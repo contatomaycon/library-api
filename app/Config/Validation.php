@@ -41,4 +41,24 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public $login = [
+        'username' => 'required',
+        'password' => 'required'
+    ];
+
+    public $book = [
+        'title' => 'required',
+        'description' => 'required',
+        'author' => 'required',
+        'pages' => 'required|numeric|integer'
+    ];
+
+    public $bookUpdate = [
+        'id' => 'required',
+        'title' => 'required',
+        'description' => 'required',
+        'author' => 'required',
+        'pages' => 'required|numeric|integer'
+    ];
 }
