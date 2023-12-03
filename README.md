@@ -4,6 +4,9 @@ Back-end da API do sistema de Library
 
 ## Siga os passos:
 
+### .env
+Na raiz do projeto, altere o arquivo .env.example para .env
+
 ### Rode o docker compose
 Na raiz do projeto faça o seguinte comando para iniciar o serviço:
 
