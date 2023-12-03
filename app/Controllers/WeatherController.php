@@ -51,7 +51,8 @@ class WeatherController extends Controller
                 'key' => $apiKey,
                 'city_name' => $city,
                 'fields' => 'only_results,temp,city,condition_code,description,time',
-            ]
+            ],
+            'timeout' => 10
         ]);
 
         return json_decode($response->getBody(), true);
