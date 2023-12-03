@@ -10,27 +10,33 @@ class AuthController extends Controller
 {
     public function login()
     {
-        if (!$this->validateInput()) {
-            return $this->response->setStatusCode(400)->setJSON([
-                'message' => \Config\Services::validation()->getErrors()
+        try {
+            if (!$this->validateInput()) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'message' => \Config\Services::validation()->getErrors()
+                ]);
+            }
+
+            $username = $this->request->getVar('username');
+            $password = $this->request->getVar('password');
+
+            $user = $this->authenticateUser($username, $password);
+            if (!$user) {
+                return $this->response->setStatusCode(401)->setJSON([
+                    'message' => 'Invalid credentials'
+                ]);
+            }
+
+            $jwt = $this->generateJWT($user['id']);
+
+            $response = $this->createResponseData($user, $jwt);
+
+            return $this->response->setJSON($response);
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON([
+                'message' => 'An error occurred during the login process'
             ]);
         }
-
-        $username = $this->request->getVar('username');
-        $password = $this->request->getVar('password');
-
-        $user = $this->authenticateUser($username, $password);
-        if (!$user) {
-            return $this->response->setStatusCode(401)->setJSON([
-                'message' => 'Invalid credentials'
-            ]);
-        }
-
-        $jwt = $this->generateJWT($user['id']);
-
-        $response = $this->createResponseData($user, $jwt);
-
-        return $this->response->setJSON($response);
     }
 
     private function validateInput()

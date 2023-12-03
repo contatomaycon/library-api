@@ -45,9 +45,6 @@ services:
   redis_library:
     image: redis:latest
     container_name: redis_library
-    environment:
-      REDIS_PASSWORD: tFvnFf32obTMy86IuKryfOga5
-    command: redis-server --requirepass tFvnFf32obTMy86IuKryfOga5
     ports:
       - "6379:6379"
     networks:

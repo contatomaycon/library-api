@@ -9,24 +9,36 @@ class BookController extends Controller
 {
     public function listAllBooks()
     {
-        $bookModel = new BookModel();
-        $books = $bookModel->select('id, title, description, author, pages, created_at')->findAll();
+        try {
+            $bookModel = new BookModel();
+            $books = $bookModel->select('id, title, description, author, pages, created_at')->findAll();
 
-        return $this->response->setJSON($books);
+            return $this->response->setJSON($books);
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON([
+                'message' => 'An error occurred while retrieving the books'
+            ]);
+        }
     }
 
     public function listBooks($id)
     {
-        $bookModel = new BookModel();
-        $book = $bookModel->select('id, title, description, author, pages, created_at')->find($id);
+        try {
+            $bookModel = new BookModel();
+            $book = $bookModel->select('id, title, description, author, pages, created_at')->find($id);
 
-        if (!$book) {
-            return $this->response->setStatusCode(404)->setJSON([
-                'message' => 'Book not found'
+            if (!$book) {
+                return $this->response->setStatusCode(404)->setJSON([
+                    'message' => 'Book not found'
+                ]);
+            }
+
+            return $this->response->setJSON($book);
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON([
+                'message' => 'An error occurred while retrieving the book'
             ]);
         }
-
-        return $this->response->setJSON($book);
     }
     
     public function addBook()

@@ -15,3 +15,12 @@ $routes->group('book', ['filter' => 'jwt'], function($routes) {
     $routes->post('add', 'BookController::addBook');
     $routes->delete('delete/(:num)', 'BookController::deleteBook/$1');
 });
+
+$routes->group('weather', ['filter' => 'jwt'], function($routes) {
+    $routes->post('city', 'WeatherController::getCurrentWeather');
+});
+
+$routes->group('location', ['filter' => 'jwt'], function($routes) {
+    $routes->get('state', 'LocationController::listStates');
+    $routes->get('state/(:num)', 'LocationController::listCities/$1');
+});
