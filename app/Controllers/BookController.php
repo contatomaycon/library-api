@@ -21,7 +21,7 @@ class BookController extends Controller
         }
     }
 
-    public function listBooks($id)
+    public function listBook($id)
     {
         try {
             $bookModel = new BookModel();
@@ -81,7 +81,7 @@ class BookController extends Controller
         }
     }
 
-    public function updateBooks()
+    public function updateBook()
     {
         try {
             if (!$this->validate('bookUpdate')) {
